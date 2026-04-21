@@ -8,19 +8,32 @@ import { Button } from '@/components/ui/button'
 import { Calendar } from '@/components/ui/calendar'
 import { cn } from '@/lib/utils'
 import { Employee } from '@/lib/employees/employee-interfaces'
+import { ChangeEvent, useState } from 'react'
+
 
 const EmployeeEditView = ({ employee, setEdit }: { employee: Employee, setEdit: (value: boolean) => void }) => {
+    const [jobTitle, setJobTitle] = useState(employee.jobTitle);
+    const [details, setDetails] = useState(employee.details)
+
+    const handleTitle = (e: ChangeEvent<HTMLInputElement>) => {
+        setJobTitle(e.target.value);
+    }
+
+    const handleDetails = (e: ChangeEvent<HTMLInputElement>) => {
+        setDetails(e.target.value);
+    }
+
 
     return (
         <>
             <div>
                 <p className="text-sm font-semibold">Job Title</p>
-                <Input value={employee.jobTitle} />
+                <Input value={jobTitle} onChange={(e) => handleTitle(e)} />
             </div>
 
             <div>
                 <p className="text-sm font-semibold">Details</p>
-                <Input value={employee.details || ""} />
+                <Input value={details || ""} onChange={(e) => handleDetails(e)} />
             </div>
 
             <div>
@@ -43,23 +56,23 @@ const EmployeeEditView = ({ employee, setEdit }: { employee: Employee, setEdit: 
             <div>
                 <p className="text-sm font-semibold">Hire Date</p>
                 <Popover>
-                            <PopoverTrigger asChild>
-                                <Button
-                                    variant={"outline"}
-                                    className={cn("w-full justify-start text-left font-normal text-muted-foreground")}
-                                >
-                                    <CalendarIcon />
-                                    <span>Pick a date</span>
-                                </Button>
-                            </PopoverTrigger>
-                            <PopoverContent className="w-auto p-0">
-                                <Calendar
-                                    mode="single"
-                                    selected={new Date()}
-                                    initialFocus
-                                />
-                            </PopoverContent>
-                        </Popover>
+                    <PopoverTrigger asChild>
+                        <Button
+                            variant={"outline"}
+                            className={cn("w-full justify-start text-left font-normal text-muted-foreground")}
+                        >
+                            <CalendarIcon />
+                            <span>Pick a date</span>
+                        </Button>
+                    </PopoverTrigger>
+                    <PopoverContent className="w-auto p-0">
+                        <Calendar
+                            mode="single"
+                            selected={new Date()}
+                            initialFocus
+                        />
+                    </PopoverContent>
+                </Popover>
             </div>
 
 

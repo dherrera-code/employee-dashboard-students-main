@@ -11,7 +11,11 @@ export const getEmployees = async () => {
 
 export const addEmployee = async (employee: Employee) => {
     const token = await getCookie('Token');
-    return await (await post('Employee/AddEmployee', { data: employee, token })).text();
+    const data = await (await post('Employee/AddEmployee', { data: employee, token }));
+
+    console.log("data from addEmployee: " + data)
+    
+    return data.text();
 }
 
 export const updateEmployee = async (employee: Employee) => {

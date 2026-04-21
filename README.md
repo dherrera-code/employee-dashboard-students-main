@@ -125,3 +125,59 @@ adding console.logs to function validateEmployeeData and notices that when I con
 # Console.logs within Server components are displayed in the TERMINAL!!! (Just figured that out)
 TypeError : body is unusable: at addEmployee function in line 14, returning body with .text() instead of .json()!
 After changing .text() with .json in the fetch endpoint!
+
+result.success is returning false despite a successful 200 endpoint!
+(REViSIT THIS ERROR!!!!!!!)
+
+### Bug #6: Error: You provided 'value' prop to form field without an onChange handle, result in readonly input fields!
+Location: components/employees/employeeDisplay.tsx
+
+Input components within EmployeeDisplay is missing an onChange() attribute to change and save the inputs! To fix this error I created useStates to hold jobTitle and details! Inside the input tags, I changed the value prop to the state of the title/ details and added the onChange() attribute that will allow state of the two variables, title and details to change!
+Changed: 
+<Input value={employee.jobTitle}  />
+<Input value={employee.details}  />
+
+To:
+const [jobTitle, setJobTitle] = useState(employee.jobTitle)
+    const [details, setDetails] = useState(employee.details)
+
+<Input value={jobTitle} onChange={(e) => setJobTitle(e.target.value)} />
+<Input value={details || ""} onChange={(e) => setDetails(e.target.value)} />
+This fix revealed another that save edits button doesn't have a function to save our edits! In result of this revelation, I created a function to handle saving our employee info and added an onClick event to our save edits button.
+
+const handleSaveEdits = async () => {
+        const editedEmployee: Employee = {
+            id: employee.id,
+            name: employee.name,
+            jobTitle: jobTitle,
+            details: details,
+            status: status,
+            hireDate: employee.hireDate
+        }
+        if(jobTitle == "" || jobTitle == null)
+            console.log("Job Title is Required!")
+
+        // call endpoint to update employee!!!
+        const result = await updateEmployeeDetails(editedEmployee)
+        console.log(result)
+        setEdit(false);
+        if(result){
+            router.refresh(); // this is used to reload our page to display our fresh data!
+        }
+    }
+
+### Bug #7 Error unable to update employee when clicking on update!
+In the employee Form, when user click to update and modal pops up, The data for employee is empty and we receive a 400 status code, Bad Request!!
+To solve the bad request, we need to pass in the id of the employee we want to change. When we call our component to update, our employee object is passed in and we can set our id right before we invoke our endpoint! I added the line
+                employeeWithChanges.id = employee!.id;
+to set our id to employeeWithChanges.id to the updated one! I used the ! with employee!.id to tell our compiler that this will not be undefined or null.
+To have our modal populate our data we need to edit, we can go back to the EmployeeForm that was invoked when user presses the edit button. Lets add a ternary to our initialized useState for originalEmployee! if type == add, then set the employee object to empty, otherwise set our employee object to the one passed in.
+The result of these changes lets us update an employee without any trouble!
+
+
+### Bug where sorting isn't working:
+Within our EmployeeList! our sort method is saved in the setEmployee's useState but deletedEmployees are being mapped out! My simple fix to show our sorted list of employees is to change:
+    deletedEmployees.map((employee, idx) => (
+To:
+    employees.map((employee, idx) => (
+within components/employees/EmployeeList.tsx

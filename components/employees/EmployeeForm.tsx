@@ -19,23 +19,28 @@ const EmployeeForm = ({ type, employee, refreshEmployees }: { type: 'Add' | 'Edi
 
     // useStates
     const [openModal, setOpenModal] = useState(false);
-    const [originalEmployee, setOriginalEmployee] = useState<Employee>({
+    const [originalEmployee, setOriginalEmployee] = useState<Employee>(type == 'Add' ? {
         id: 0,
         name: "",
         jobTitle: "",
         hireDate: "",
         details: "",
         status: ""
-    });
-    // const [isFormValid, setIsFormValid] = useState(true);
-
+    }
+        :
+        {
+            id: employee!.id,
+            name: employee!.name,
+            jobTitle: employee!.jobTitle,
+            hireDate: employee!.hireDate,
+            details: employee!.details,
+            status: employee!.status
+        });
 
     const isFormValid =
         originalEmployee.name.trim() !== "" &&
         originalEmployee.jobTitle.trim() !== "" &&
         originalEmployee.hireDate !== "";
-
-
 
     // Modal Functions
     const resetForm = () => {
@@ -96,11 +101,14 @@ const EmployeeForm = ({ type, employee, refreshEmployees }: { type: 'Add' | 'Edi
 
             if (type === "Add") {
                 const result = await addEmployeeAction(employeeWithChanges);
+                console.log(result)
                 if (result.success) {
                     refreshEmployees();
                 }
             } else {
+                employeeWithChanges.id = employee!.id;
                 const result = await updateEmployeeAction(employeeWithChanges);
+                console.log(result);
                 if (result.success) {
                     refreshEmployees();
                 }

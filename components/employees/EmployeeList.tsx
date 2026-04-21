@@ -190,7 +190,7 @@ const EmployeeList = () => {
                     </TableRow>
                 </TableHeader>
                 <TableBody>
-                    {deletedEmployees.length === 0 ? (
+                    {employees.length === 0 ? (
                         <TableRow>
                             <TableCell></TableCell>
                             <TableCell className="text-center">
@@ -199,7 +199,7 @@ const EmployeeList = () => {
                             <TableCell></TableCell>
                         </TableRow>
                     ) : (
-                        deletedEmployees.map((employee, idx) => (
+                        employees.map((employee, idx) => (
                             <TableRow key={idx}>
                                 <TableCell className="font-medium">{employee.name}</TableCell>
                                 <TableCell>{employee.jobTitle}</TableCell>

@@ -16,8 +16,10 @@ export const getEmployeesAction = async (): Promise<ActionResult<Employee[]>> =>
 export const addEmployeeAction = async (employee: Employee): Promise<ActionResult> => {
     try {
         const result = await addEmployee(employee);
+        console.log("result from addEmployee function" + result);
         return { success: result, message: result ? 'Employee added successfully.' : 'Error adding employee.' };
     } catch (error) {
+        console.log("Error in add employee" + error )
         return { success: false, message: 'Error adding employee.' };
     }
 }
@@ -27,6 +29,7 @@ export const updateEmployeeAction = async (employee: Employee): Promise<ActionRe
         const result = await updateEmployee(employee);
         return { success: result, message: result ? 'Employee updated successfully.' : 'Error updating employee.' };
     } catch (error) {
+        console.log(error)
         return { success: false, message: 'Error updating employee.' };
     }
 }
