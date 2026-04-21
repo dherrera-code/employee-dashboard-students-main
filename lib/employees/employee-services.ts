@@ -15,7 +15,7 @@ export const addEmployee = async (employee: Employee) => {
 
     console.log("data from addEmployee: " + data)
     
-    return data.text();
+    return data;
 }
 
 export const updateEmployee = async (employee: Employee) => {

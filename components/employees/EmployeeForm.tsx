@@ -54,6 +54,7 @@ const EmployeeForm = ({ type, employee, refreshEmployees }: { type: 'Add' | 'Edi
     const submitForm = () => {
         setOpenModal(false);
         setOriginalEmployee({ id: 0, name: "", jobTitle: "", hireDate: "", details: "", status: "" });
+        setOpenModal(false);
     };
 
     // Change employee functions

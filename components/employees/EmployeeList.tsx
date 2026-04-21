@@ -30,8 +30,11 @@ const EmployeeList = () => {
             console.log('result: ', result);
             console.log('this seems fine');
 
-            if(result.success)
+            if(result.success){
+
                 setDeletedEmployees(result.data!);
+                setEmployees(result.data!)
+            }
             else
                 console.log(result)
 

@@ -37,8 +37,12 @@ const request = async (endpoint: string, options: FetchOptions = { method: 'GET'
     }
 
     try {
+        if(method == "POST")
+            return await res.text();
+        
         return await res.json();
-    } catch {
+    } catch (error) {
+        console.log("Displaying Error from Service: " + error);
         return res;
     }
 }

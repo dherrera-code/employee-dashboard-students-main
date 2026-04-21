@@ -185,3 +185,16 @@ Within our EmployeeList! our sort method is saved in the setEmployee's useState 
 To:
     employees.map((employee, idx) => (
 within components/employees/EmployeeList.tsx
+
+### Error again where creation of employee doesn't populate.
+To approach this issue, I created multiple console.logs within the server components and looked at the logs within the terminal. I kept receiving an error that Body is unusable: Body has already been read! If might be because in the request method in services.ts, when we try to get res.json and fails, it uses our one chance to parse our data from our endpoint even thorugh our endpoint made succeeded with a 200! 
+Within the try block in the request function, I changed:
+        
+        return await res.json();
+
+To:
+        if(method == "POST")
+            return await res.text();
+        
+        return await res.json();
+This seems to fix our function to create new employees and populate our new employee!
