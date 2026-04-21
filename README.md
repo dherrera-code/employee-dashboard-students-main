@@ -1,3 +1,7 @@
+
+# Link to hosted site: 
+https://employee-dashboard-students-main.vercel.app/login
+
 # Employee Dashboard - Debugging Assignment
 
 A Next.js employee management application with some bugs that need fixing.

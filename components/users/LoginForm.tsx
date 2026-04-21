@@ -23,7 +23,6 @@ const LoginForm = () => {
             ...user,
             [event.target.id]: event.target.value,
         });
-        console.log(loginError);
         if (loginError) {
             setLoginError(false);
         }
