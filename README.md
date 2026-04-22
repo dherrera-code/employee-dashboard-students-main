@@ -198,3 +198,19 @@ To:
         
         return await res.json();
 This seems to fix our function to create new employees and populate our new employee!
+
+### Logging in bug that direct user to employees page then back to login page.
+This bug I unintentionally introduced when I made a previous change to the request method in services.ts!
+
+        if(method == "POST")
+            return await res.text();
+        
+        return await res.json();
+In the case of our login, my endpoint gave back data with an Ok status code but we made our response turn into a string instead of JSON!
+MY fix that would still help my endpoint to create employees, this was my change to the code!
+        if(method == "POST" && endpoint == "Employee/AddEmployee")
+            return await res.text();
+        
+        return await res.json();
+I would check if im accessing the addEmployees endpoint, otherwise I would return JSON!
+Logging in is successful!

@@ -37,7 +37,7 @@ const request = async (endpoint: string, options: FetchOptions = { method: 'GET'
     }
 
     try {
-        if(method == "POST")
+        if(method == "POST" && endpoint == "Employee/AddEmployee")
             return await res.text();
         
         return await res.json();

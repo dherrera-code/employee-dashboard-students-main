@@ -10,7 +10,7 @@ export const addUser = async (user: UserAccessRequest) => {
 
 export const login = async (user: UserAccessRequest) => {
     const value: UserAccessResponse = await post('User/Login', { data: user });
-    console.log("value", value);
+    //console.log("value", value);
     
     await saveCookie({ name: 'Token', value: value.token });
     await saveCookie({ name: 'Email', value: value.email });
