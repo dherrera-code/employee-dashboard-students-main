@@ -30,10 +30,10 @@ const EmployeeList = () => {
             console.log('result: ', result);
             console.log('this seems fine');
 
-            if(result.success){
+            if (result.success) {
 
                 setDeletedEmployees(result.data!);
-                setEmployees(result.data!)
+
             }
             else
                 console.log(result)
@@ -53,9 +53,6 @@ const EmployeeList = () => {
             setFilterType(value);
         }
 
-        if (selectedSort) {
-            setSelectedSort("");
-        }
     };
 
     const changeSortByJob = (e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -67,7 +64,6 @@ const EmployeeList = () => {
     // Delete employee
     const refreshEmployeeData = async (id: number) => {
         try {
-            console.log('probably not the issue');
             deleteEmployeeAction(id);
             if (true) {
                 await clearEmployeeCache();
@@ -92,10 +88,11 @@ const EmployeeList = () => {
 
     // Sorting the employees
     useEffect(() => {
-        const sortingEmployees = deletedEmployees;
-
+        const sortingEmployees = [...deletedEmployees];
+        console.log(sortingEmployees)
+        // console.log("DeletedEmployee var list: " + deletedEmployees)
         const handleSorting = () => {
-            console.log('sorting employees correctly');
+            console.log('sorting employees from handleSorting: ' + filterType);
             switch (filterType) {
                 case "name":
                     setEmployees(sortingEmployees.sort((a: Employee, b: Employee) => a.name.localeCompare(b.name)));
@@ -105,12 +102,12 @@ const EmployeeList = () => {
                     break;
                 case "hire-date":
                     setEmployees(sortingEmployees.sort(
-                        (a: Employee, b: Employee) => Number(new Date(b.hireDate)) - Number(new Date(a.hireDate))
+                        (a: Employee, b: Employee) => Number(new Date(a.hireDate)) - Number(new Date(b.hireDate))
                     ));
                     break;
                 case "hire-date-reverse":
                     setEmployees(sortingEmployees.sort(
-                        (a: Employee, b: Employee) => Number(new Date(a.hireDate)) - Number(new Date(b.hireDate))
+                        (a: Employee, b: Employee) => Number(new Date(b.hireDate)) - Number(new Date(a.hireDate))
                     ));
                     break;
                 case "job-title":
@@ -121,10 +118,17 @@ const EmployeeList = () => {
                     break;
             }
         };
-
         handleSorting();
 
     }, [deletedEmployees, filterType, selectedSort]);
+
+    useEffect(() => {
+        
+        console.log("employees updated and filterType changed");
+        console.log("filterType: "+ filterType)
+        console.log("selectedSort: "+ selectedSort)
+        console.log("<-------------------->")
+    }, [employees, filterType, selectedSort])
 
     return (
         <>

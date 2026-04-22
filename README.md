@@ -55,34 +55,34 @@ The application currently has several bugs affecting functionality. Your job is 
 After fixing bugs, verify these features work:
 
 ### Employee List
-- [ ] Employees load on page mount
+- [√] Employees load on page mount
 - [ ] Sorting by name (A-Z and Z-A) works
 - [ ] Sorting by hire date (newest/oldest) works
 - [ ] Filtering by job title works
-- [ ] List updates immediately after changes
+- [√] List updates immediately after changes
 
 ### Add Employee
-- [ ] Modal opens with empty form
-- [ ] Can enter name, job title, and hire date
-- [ ] New employee appears in list immediately
-- [ ] Modal closes after successful add
+- [√] Modal opens with empty form
+- [√] Can enter name, job title, and hire date
+- [√] New employee appears in list immediately
+- [√] Modal closes after successful add
 
 ### Edit Employee
-- [ ] Modal opens with pre-filled data
-- [ ] Can modify employee information
-- [ ] Changes appear in list immediately
-- [ ] Modal closes after successful edit
+- [√] Modal opens with pre-filled data
+- [√] Can modify employee information
+- [√] Changes appear in list immediately
+- [√] Modal closes after successful edit
 
 ### Delete Employee
-- [ ] Employee is removed from list immediately
-- [ ] No page refresh required
+- [√] Employee is removed from list immediately
+- [√] No page refresh required
 
 ### Employee Details
-- [ ] Can view individual employee details
-- [ ] Edit button switches to edit mode
-- [ ] Edit mode shows input fields
-- [ ] Can save changes from detail page
-- [ ] Back button returns to employee list
+- [√] Can view individual employee details
+- [√] Edit button switches to edit mode
+- [√] Edit mode shows input fields
+- [√] Can save changes from detail page
+- [√] Back button returns to employee list
 
 ## Submission
 
@@ -179,12 +179,20 @@ To have our modal populate our data we need to edit, we can go back to the Emplo
 The result of these changes lets us update an employee without any trouble!
 
 
-### Bug where sorting isn't working:
-Within our EmployeeList! our sort method is saved in the setEmployee's useState but deletedEmployees are being mapped out! My simple fix to show our sorted list of employees is to change:
-    deletedEmployees.map((employee, idx) => (
+### Bug #8 where sorting isn't working property:
+
+Sort By title isn't working at all and when we sort for the first time, the UI doesn't change. WHen we change again, the previous change will display in the UI!
+
+The main reason the UI doesn't change because our employees list state in memory in the same so our map function doesn't rerender our UI. Our fix for this is to use the spread operator when declaring our sortingEmployees list! Our spread operator creates a new instance of our sorted list so when we save our new instance with setEmployees it will map out our new sorted list! In the useEffect to handleSorting in EmployeeList component, I changed:
+
+    const sortingEmployees = deletedEmployees;
+
 To:
-    employees.map((employee, idx) => (
-within components/employees/EmployeeList.tsx
+    const sortingEmployees = [...deletedEmployees];
+
+Also, I fixed the logic for hire-date and hire-date-reverse to where it will sort properly!
+I swapped the a and b employee so hire-date will be sorted properly!
+
 
 ### Error again where creation of employee doesn't populate.
 To approach this issue, I created multiple console.logs within the server components and looked at the logs within the terminal. I kept receiving an error that Body is unusable: Body has already been read! If might be because in the request method in services.ts, when we try to get res.json and fails, it uses our one chance to parse our data from our endpoint even thorugh our endpoint made succeeded with a 200! 
