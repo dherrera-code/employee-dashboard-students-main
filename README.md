@@ -56,9 +56,9 @@ After fixing bugs, verify these features work:
 
 ### Employee List
 - [√] Employees load on page mount
-- [ ] Sorting by name (A-Z and Z-A) works
-- [ ] Sorting by hire date (newest/oldest) works
-- [ ] Filtering by job title works
+- [√] Sorting by name (A-Z and Z-A) works
+- [√] Sorting by hire date (newest/oldest) works
+- [√] Filtering by job title works
 - [√] List updates immediately after changes
 
 ### Add Employee

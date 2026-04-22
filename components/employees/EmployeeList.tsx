@@ -23,17 +23,9 @@ const EmployeeList = () => {
     // Function to get employees
     const clearEmployeeCache = async () => {
         try {
-            // const result: Employee[] | "Not Authorized" = [];
             const result = await getEmployeesAction();
-            // const result = { success: false, data: [] };
-
-            console.log('result: ', result);
-            console.log('this seems fine');
-
             if (result.success) {
-
                 setDeletedEmployees(result.data!);
-
             }
             else
                 console.log(result)
@@ -89,10 +81,9 @@ const EmployeeList = () => {
     // Sorting the employees
     useEffect(() => {
         const sortingEmployees = [...deletedEmployees];
-        console.log(sortingEmployees)
-        // console.log("DeletedEmployee var list: " + deletedEmployees)
+
         const handleSorting = () => {
-            console.log('sorting employees from handleSorting: ' + filterType);
+
             switch (filterType) {
                 case "name":
                     setEmployees(sortingEmployees.sort((a: Employee, b: Employee) => a.name.localeCompare(b.name)));
@@ -121,14 +112,6 @@ const EmployeeList = () => {
         handleSorting();
 
     }, [deletedEmployees, filterType, selectedSort]);
-
-    useEffect(() => {
-        
-        console.log("employees updated and filterType changed");
-        console.log("filterType: "+ filterType)
-        console.log("selectedSort: "+ selectedSort)
-        console.log("<-------------------->")
-    }, [employees, filterType, selectedSort])
 
     return (
         <>
